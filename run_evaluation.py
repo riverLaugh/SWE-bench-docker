@@ -126,7 +126,12 @@ async def main(
 
     # Set the relevant data on task_instances
     for prediction in predictions:
-        task = tasks_map[prediction[KEY_INSTANCE_ID]]
+        instance_id = prediction[KEY_INSTANCE_ID]
+
+        if instance_id not in tasks_map:
+            continue
+
+        task = tasks_map[instance_id]
 
         test_type = MAP_REPO_TO_TEST_FRAMEWORK[task["repo"]]
         test_directives = get_test_directives(task)

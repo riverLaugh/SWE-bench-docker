@@ -20,7 +20,9 @@ def _generate_table(
 """
     instances_ids.sort()
     for instance_id in instances_ids:
-        table_md += f"| [{instance_id}](logs/{instance_id}.{model_name_or_path}.eval.log) "
+        table_md += (
+            f"| [{instance_id}](logs/{instance_id}.{model_name_or_path}.eval.log) "
+        )
         table_md += f"| {instances[instance_id]['repo']} "
         table_md += f"| {instances[instance_id]['version']} |\n"
 
@@ -78,14 +80,17 @@ def generate_report(
             continue
 
         report_by_patch_status = summary[key]
-        case_resolution += f"""\n\n## {key}
+        case_resolution += (
+            f"""\n\n## {key}
 
 | Resolved | Count | Rate |
 | -------- | ----- | ---- |
 | Yes | {report_by_patch_status['case_resolution_counts'].get('RESOLVED_FULL', 0)} | {report_by_patch_status['case_resolution_rates'].get('RESOLVED_FULL', 0)}% |
 | Partially | {report_by_patch_status['case_resolution_counts'].get('RESOLVED_PARTIAL', 0)} | {report_by_patch_status['case_resolution_rates'].get('RESOLVED_PARTIAL', 0)}% |
 | No | {report_by_patch_status['case_resolution_counts'].get('RESOLVED_NO', 0)} | {report_by_patch_status['case_resolution_rates'].get('RESOLVED_NO', 0)}% |
-"""""
+"""
+            ""
+        )
 
     print(case_resolution)
     report_md += case_resolution
